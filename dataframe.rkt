@@ -17,19 +17,20 @@
   (if (null? tdarr) '()
       (list-ref tdarr index))
 )
-
+;(indices -(start,end))
 (define (slice arr indices)
   (let ((start (car indices))
         (end (cdr indices)))
     (if (or (= start end) (> start end))
         '()
-        (let((new-start (+ start 1)))(cons (list-ref arr start) (slice arr (list new-start end))))
+        (let((new-start (+ start 1)))(cons (list-ref arr start) (slice arr (cons new-start end))))
     )
   )
 )
 
 (define (slice-row df indices)
   (cons (get-head df) (slice (get-values df) indices)))
+
 
 (define (slice-coln df indices)
   (define (slice-coln-helper df indices)
@@ -58,3 +59,12 @@
   )
   (cons (select (get-head df) indices) (select-coln-helper (get-values df) indices))
 )  
+
+(define (arr-remove arr index)
+  (define (arr-remove-helper array i)
+    (if (= i index)
+        (cdr array)
+        (cons (car array) (arr-remove-helper (cdr array) (+ i 1)))))
+  (if (and (> index (length arr)) (= index (length arr)))
+      arr
+    (arr-remove-helper arr 0)))

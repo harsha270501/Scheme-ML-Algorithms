@@ -1,5 +1,6 @@
 #lang racket
-(require "dataframe.rkt")
+(require "../data/dataframe.rkt")
+(provide (all-defined-out))
 (define (train-test-split dataset percentage)
   (define (train-test-helper data train trainlen)
     (if (= trainlen 0)

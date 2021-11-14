@@ -1,4 +1,5 @@
 #lang racket
+(provide (all-defined-out))
 (define (test-split index value dataset)
   (define (test-split-helper data left right)
     (cond ((null? data) (cons left right))

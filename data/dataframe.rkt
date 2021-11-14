@@ -9,6 +9,9 @@
 (define (get-values df)
   (cdr df))
 
+(define (number-colns df)
+  (length (car df)))
+
 (define (coln-access tdarr index)
   (if (null? tdarr) '()
       (cons (list-ref (car tdarr) index) (coln-access (cdr tdarr) index))))
@@ -59,6 +62,14 @@
   )
   (cons (select (get-head df) indices) (select-coln-helper (get-values df) indices))
 )  
+
+(define (coln-indices head coln)
+  (cond ((or (null? head) (null? coln)) '())
+        (else (cons (index-of head (car coln)) (coln-indices head (cdr coln))))))
+
+(define (select-coln-names df coln)
+  (let ((indices (coln-indices (get-head df) coln)))
+    (select-coln df indices)))
 
 (define (arr-remove arr index)
   (define (arr-remove-helper array i)

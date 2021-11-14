@@ -1,5 +1,6 @@
 #lang racket
-(require "dataframe.rkt")
+(require "../data/dataframe.rkt")
+(provide (all-defined-out))
 (define (cross_validation_split dataset n_folds)
   (let ((dataset_copy dataset)
         (fold_size (/ (length dataset) n_folds))

@@ -1,0 +1,46 @@
+#lang racket
+(require "../data/dataframe.rkt")
+(provide (all-defined-out))
+(define (sum val)
+  (if (null? val) 0
+      (+ (car val) (sum (cdr val)))))
+(define (size val)
+  (if (null? val) 0
+      (+ 1 (size (cdr val)))))
+(define (square x)
+  (* x x))
+(define (euclid_distance distance x y)
+  (if (null? x) (sqrt distance)
+      (euclid_distance (+ distance (square (- (car x) (car y)))) (cdr x) (cdr y))
+     ))
+
+(define (sortdist dist)
+  (define (find-min dist minindex index)
+    (cond ((= index (length dist))  minindex)
+          (else (let ((newmin (cadr (list-ref dist index)))
+                      (oldmin (cadr (list-ref dist minindex))))
+                  (if (< newmin oldmin)
+                      (find-min dist index (+ index 1))
+                      (find-min dist minindex (+ index 1)))))))
+  (define (get-sorted-list dist)
+    (if (null? dist) '()
+        (let ((minindex (find-min dist 0 1)))
+          (let ((modified-arr (arr-remove dist minindex)))
+            (cons (list-ref dist minindex) (get-sorted-list modified-arr))))))
+  (get-sorted-list dist))
+
+(define (get-neighbors train test param)
+  (define n_neigh (car param))
+  (define (get-distance train)
+    (if (null? train) '()
+        (cons (list (car train) (euclid_distance 0 (car train) test)) (get-distance (cdr train)))))
+
+  (define (get-neigh sorted n_neigh)
+  (if (= n_neigh 0) '()
+      (cons (car sorted) (get-neigh (cdr sorted) (- n_neigh 1)))))
+
+  
+  (define distances (get-distance train))
+  (define sorted (sortdist distances))
+  (get-neigh sorted n_neigh)
+)

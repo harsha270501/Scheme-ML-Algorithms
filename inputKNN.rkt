@@ -4,7 +4,7 @@
 (require "./data/dictionary.rkt")
 (require "./abstract_procedures/evaluatealgo.rkt")
 (require "./abstract_procedures/traintestsplit.rkt")
-(require "./ML_Algos/Perceptron_Algo.rkt")
+(require "./ML_Algos/KNN.rkt")
 (require "./abstract_procedures/accuracy.rkt")
 (require racket/trace)
 (require csv-reading)
@@ -35,4 +35,4 @@
 (define data (read-values))
 (define df (make-dataframe head data))
 
-(define acc (evaluate-algo df train-test-split 70 perceptron acc_metric (cons 0.1 5)))
+(define acc (eval-algo df train-split get-neighbors acc_metric '(3)))

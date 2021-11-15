@@ -33,4 +33,12 @@
   )
 )
 
+(trace-define (eval-algo data splitfn algo acc args)
+  (define traintest (splitfn (get-values data)))
+  
+  (define traindata (car traintest))
+  (define testdata (cadr traintest))
+  (algo traindata testdata args)
+)
+
 

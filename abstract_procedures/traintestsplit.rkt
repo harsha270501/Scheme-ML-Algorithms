@@ -14,6 +14,8 @@
     (let ((traintest (train-test-helper data-copy '() train-len)))
       traintest)))
 
+(define (train-split dataset)
+  (list (cdr dataset) (car dataset)))
 
 (define head (list 'x1 'x2 'x3))
 (define data (list (list 1 2 3) (list 4 5 6) (list 7 8 9) (list 5 8 9)))

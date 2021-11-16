@@ -4,7 +4,7 @@
 (require "extractclass.rkt")
 (require racket/trace)
 (provide (all-defined-out))
-(define (evaluate-algorithm data splitfn split algo acc args)
+(trace-define (evaluate-algorithm data splitfn split algo acc args)
   (define traintest (splitfn (get-values data) split))
   
   (define traindata (car traintest))

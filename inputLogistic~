@@ -1,10 +1,10 @@
 #lang racket
+(provide (all-defined-out))
 (require "./data/dataframe.rkt")
 (require "./data/dictionary.rkt")
 (require "./abstract_procedures/evaluatealgo.rkt")
 (require "./abstract_procedures/traintestsplit.rkt")
-(require "./ML_Algos/Linear_Regression.rkt")
-(require "./ML_Algos/Naive_Bayes.rkt")
+(require "./ML_Algos/Perceptron_Algo.rkt")
 (require "./abstract_procedures/accuracy.rkt")
 (require racket/trace)
 (require csv-reading)
@@ -16,7 +16,7 @@
      (strip-trailing-whitespace? . #t))))
 
 (define next-row
-  (csv-reader (open-input-file "housing.csv")))
+  (csv-reader (open-input-file "sonar.csv")))
 
 (define (convert-dtype row)
      (cond ((null? row) '())
@@ -35,4 +35,4 @@
 (define data (read-values))
 (define df (make-dataframe head data))
 
-(define acc (evaluate-algorithm df train-test-split 70 simple_linear_regression rmse '()))
+(define acc (evaluate-algo df train-test-split 70 perceptron acc_metric (cons 0.3 5)))
